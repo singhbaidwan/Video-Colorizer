@@ -10,18 +10,26 @@ class Main extends React.Component {
     this.state = {
       imageURL: '',
     };
-
+    this.boxChecked = React.createRef();
     this.handleUploadImage = this.handleUploadImage.bind(this);
   }
-
+  
   handleUploadImage(ev) {
     ev.preventDefault();
 
     const data = new FormData();
     data.append('file', this.uploadInput.files[0]);
     data.append('filename', "abc");
-
-    fetch('http://localhost:4000/upload', {
+    var variable = "upload1";
+    console.log(this.boxChecked.current.checked);
+    if(this.boxChecked.current.checked)
+    {
+      variable = "upload2";
+    }
+    else{
+      variable = "upload1";
+    }
+    fetch('http://localhost:4000/'+variable, {
       method: 'POST',
       body: data,
     }).then((response) => {
@@ -52,7 +60,7 @@ class Main extends React.Component {
         </div>
         <div class = "parent">
           <div class = "child"><h5>Image Line Art ? </h5></div>
-        <div class = "child"><input type="checkbox" className = "toggle-body" id="switch" /><label className = "toggle-label" for="switch">Toggle</label>
+        <div class = "child"><input ref={this.boxChecked} type="checkbox" value="True" className = "toggle-body" id="switch" /><label className = "toggle-label" for="switch">Toggle</label>
         </div>
         </div>
       </form>

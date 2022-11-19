@@ -26,7 +26,7 @@ def FrameCapture(path):
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-@app.route('/upload', methods=['POST'])
+@app.route('/upload1', methods=['POST'])
 def fileUpload():
     target=os.path.join(UPLOAD_FOLDER,'test_docs')
     if not os.path.isdir(target):
@@ -52,7 +52,43 @@ def fileUpload():
         
     os.chdir('/Users/dalveersingh/Downloads/College/testing capstone/app/server/automatic-video-colorization')
     arr=["python", "-m", "tcvc.apply","--input-path","/Users/dalveersingh/Downloads/College/testing capstone/data_upload/ImageData","--input-style", "greyscale", "--model", "/Users/dalveersingh/Downloads/College/testing capstone/weights-greyscale/16-20/netG_LA2_weights_epoch_5.pth"]
+    
     subprocess.run(arr)
+    
+    session['uploadFilePath']=destination
+    response="Whatever you wish too return"
+    return response
+
+
+@app.route('/upload2', methods=['POST'])
+def fileUpload2():
+    target=os.path.join(UPLOAD_FOLDER,'test_docs')
+    if not os.path.isdir(target):
+        os.mkdir(target)
+    logger.info("welcome to upload`")
+    file = request.files['file'] 
+    filename = secure_filename(file.filename)
+    destination="/".join([target, filename])
+    file.save(destination)
+    #Create Image Data folder
+    subprocess.run(
+        ["mkdir","{}".format(UPLOAD_FOLDER+"/"+"ImageData")]
+    )
+    subprocess.run(
+        ["mkdir","{}".format(UPLOAD_FOLDER+"/"+"Result")]
+    )
+    root, extention = os.path.splitext(destination)
+    if extention == ".mp4":
+        os.chdir(UPLOAD_FOLDER+"/"+"ImageData")
+        FrameCapture(destination)
+    else:
+        subprocess.run(["mv",destination,UPLOAD_FOLDER+"/"+"ImageData"])
+    print("USING LINE ART")
+    os.chdir('/Users/dalveersingh/Downloads/College/testing capstone/app/server/automatic-video-colorization')
+    arr=["python", "-m", "tcvc.apply","--input-path","/Users/dalveersingh/Downloads/College/testing capstone/data_upload/ImageData","--input-style", "line_art", "--model", "/Users/dalveersingh/Downloads/College/testing capstone/weights-line-art/16-20/netG_LA2_weights_epoch_5.pth"]
+    
+    subprocess.run(arr)
+    
     session['uploadFilePath']=destination
     response="Whatever you wish too return"
     return response

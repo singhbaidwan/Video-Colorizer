@@ -1,5 +1,5 @@
 import os
-from flask import Flask, flash, request, redirect, url_for, session
+from flask import Flask, flash, request, redirect, url_for, session,jsonify
 from werkzeug.utils import secure_filename
 from flask_cors import CORS, cross_origin
 import logging
@@ -14,6 +14,14 @@ logger = logging.getLogger('HELLO WORLD')
 
 UPLOAD_FOLDER = '/Users/dalveersingh/Downloads/College/testing capstone/data_upload'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif','.mp4'])
+def runSuperResolution():
+    os.chdir('/Users/dalveersingh/Downloads/College/testing capstone/app/server')
+    arr2 = ["python3","test.py"]
+    subprocess.run(arr2)
+def convertToVideo():
+    os.chdir(UPLOAD_FOLDER)
+    arr2 = ["python", "-m", "tcvc.convert_images_to_video","--framerate", "30","--input-path", "/Users/dalveersingh/Downloads/College/testing capstone/data_upload/Result"]
+    subprocess.run(arr2)
 def FrameCapture(path):
     vidObj = cv2.VideoCapture(path)
     count = 0
@@ -26,7 +34,13 @@ def FrameCapture(path):
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-@app.route('/upload1', methods=['POST'])
+@app.route('/success',methods=['POST','GET'])
+def success(name):
+   return 'welcome'
+
+
+
+@app.route('/upload1', methods=['POST','GET'])
 def fileUpload():
     target=os.path.join(UPLOAD_FOLDER,'test_docs')
     if not os.path.isdir(target):
@@ -54,12 +68,15 @@ def fileUpload():
     arr=["python", "-m", "tcvc.apply","--input-path","/Users/dalveersingh/Downloads/College/testing capstone/data_upload/ImageData","--input-style", "greyscale", "--model", "/Users/dalveersingh/Downloads/College/testing capstone/weights-greyscale/16-20/netG_LA2_weights_epoch_5.pth"]
     
     subprocess.run(arr)
-    os.chdir('/Users/dalveersingh/Downloads/College/testing capstone/app/server')
-    arr2 = ["python3","test.py"]
-    subprocess.run(arr2)
+    
     session['uploadFilePath']=destination
-    response="Whatever you wish too return"
+
+    response = jsonify({'some': 'data'})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    if extention == ".mp4":
+        convertToVideo()
     return response
+    # return response
 
 
 @app.route('/upload2', methods=['POST'])
@@ -91,11 +108,12 @@ def fileUpload2():
     
     subprocess.run(arr)
     
-    os.chdir('/Users/dalveersingh/Downloads/College/testing capstone/app/server')
-    arr2 = ["python3","test.py"]
-    subprocess.run(arr2)
+    
     session['uploadFilePath']=destination
-    response="Whatever you wish too return"
+    response = jsonify({'some': 'data'})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    if extention == ".mp4":
+        convertToVideo()
     return response
 
 if __name__ == "__main__":

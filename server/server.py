@@ -54,7 +54,9 @@ def fileUpload():
     arr=["python", "-m", "tcvc.apply","--input-path","/Users/dalveersingh/Downloads/College/testing capstone/data_upload/ImageData","--input-style", "greyscale", "--model", "/Users/dalveersingh/Downloads/College/testing capstone/weights-greyscale/16-20/netG_LA2_weights_epoch_5.pth"]
     
     subprocess.run(arr)
-    
+    os.chdir('/Users/dalveersingh/Downloads/College/testing capstone/app/server')
+    arr2 = ["python3","test.py"]
+    subprocess.run(arr2)
     session['uploadFilePath']=destination
     response="Whatever you wish too return"
     return response
@@ -89,6 +91,9 @@ def fileUpload2():
     
     subprocess.run(arr)
     
+    os.chdir('/Users/dalveersingh/Downloads/College/testing capstone/app/server')
+    arr2 = ["python3","test.py"]
+    subprocess.run(arr2)
     session['uploadFilePath']=destination
     response="Whatever you wish too return"
     return response

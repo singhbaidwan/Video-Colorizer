@@ -84,7 +84,7 @@ if __name__ == "__main__":
     transform = transforms.Compose(transform_list)
 
     result_dir = os.path.join(opt.input_path, "colored")
-    os.makedirs(result_dir, exist_ok=True)
+    # os.makedirs(result_dir, exist_ok=True)
 
     counter = 0
     with torch.no_grad():

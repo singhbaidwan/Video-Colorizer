@@ -85,7 +85,7 @@ def fileUpload2():
         subprocess.run(["mv",destination,UPLOAD_FOLDER+"/"+"ImageData"])
     print("USING LINE ART")
     os.chdir('/Users/dalveersingh/Downloads/College/testing capstone/app/server/automatic-video-colorization')
-    arr=["python", "-m", "tcvc.apply","--input-path","/Users/dalveersingh/Downloads/College/testing capstone/data_upload/ImageData","--input-style", "line_art", "--model", "/Users/dalveersingh/Downloads/College/testing capstone/weights-line-art/16-20/netG_LA2_weights_epoch_5.pth"]
+    arr=["python", "-m", "tcvc.apply","--input-path","/Users/dalveersingh/Downloads/College/testing capstone/data_upload/ImageData","--input-style", "greyscale", "--model", "/Users/dalveersingh/Downloads/College/testing capstone/weights-line-art/final/netG_LA2_weights_epoch_5.pth"]
     
     subprocess.run(arr)
     

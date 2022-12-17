@@ -18,17 +18,37 @@ def runSuperResolution():
     os.chdir('/Users/dalveersingh/Downloads/College/testing capstone/app/server')
     arr2 = ["python3","test.py"]
     subprocess.run(arr2)
+
 def convertToVideo():
     os.chdir(UPLOAD_FOLDER)
-    arr2 = ["python", "-m", "tcvc.convert_images_to_video","--framerate", "30","--input-path", "/Users/dalveersingh/Downloads/College/testing capstone/data_upload/Result"]
-    subprocess.run(arr2)
+    img_array = []
+    name = []
+    path = "/Users/dalveersingh/Downloads/College/testing capstone/data_upload/Result"
+    for f in os.listdir(path):
+        filename = path+"/"+f
+        name.append(filename)
+    name.sort()
+    for filename in name:
+        img = cv2.imread(filename)
+        height, width, layers = img.shape
+        size = (width,height)
+        img_array.append(img)
+    
+    out = cv2.VideoWriter('project.avi',cv2.VideoWriter_fourcc(*'DIVX'), 15, size)
+ 
+    for i in range(len(img_array)):
+        out.write(img_array[i])
+    out.release()
+
+
 def FrameCapture(path):
     vidObj = cv2.VideoCapture(path)
     count = 0
     success = 1
     while success:
         success, image = vidObj.read()
-        cv2.imwrite("frame%04d.jpg" % count, image)
+        if success:
+            cv2.imwrite("frame%04d.jpg" % count, image)
         count += 1
   
 app = Flask(__name__)
@@ -70,7 +90,7 @@ def fileUpload():
     subprocess.run(arr)
     
     session['uploadFilePath']=destination
-
+    extention = ".mp4"
     response = jsonify({'some': 'data'})
     response.headers.add('Access-Control-Allow-Origin', '*')
     if extention == ".mp4":

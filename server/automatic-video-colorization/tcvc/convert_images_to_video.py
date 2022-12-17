@@ -48,7 +48,7 @@ if __name__ == "__main__":
     with open(image_list_file_path, "w") as f:
         for path in image_file_paths:
             f.write("file {}\n".format(Path(path).as_posix()))
-
+    print("working")
     subprocess.run(
         [
             "ffmpeg",
@@ -67,7 +67,7 @@ if __name__ == "__main__":
             "{}".format(Path(os.path.join(args.input_path, "video.mp4")).as_posix()),
         ]
     )
-
+    print("workding 2")
     if args.audio_path:
         subprocess.run(
             [

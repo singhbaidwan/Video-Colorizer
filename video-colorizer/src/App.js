@@ -55,29 +55,19 @@ render() {
     <div>
     <input ref={(ref) => { this.uploadInput = ref; }} type="file" />
     </div>
-    {/* <div>
-    <input ref={(ref) => { this.fileName = ref; }} type="text" placeholder="Enter the desired name of file" />
-  </div> */}
   <br />
   <div>
   <button className='button-77' size="lg">{this.state.buttonName}</button>
   </div>
   <div class = "parent">
-  <div class = "child"><h5>Image Line Art ? </h5></div>
+  <div class = "child"><h5>Video Line Art ? </h5></div>
   <div class = "child"><input ref={this.boxChecked} type="checkbox" value="True" className = "toggle-body" id="switch" /><label className = "toggle-label" for="switch">Toggle</label>
   </div>
   </div>
   </form>
-  <ul>
-  <li>Dalveer Singh (101903193)</li>
-  <li>Priyansh Jain (101903757)</li>
-  <li>Sargun Bindra (101903175)</li>
-  <li>Utkarsh Mishra (101903226)</li>
-  </ul>
   </div>
   </div>
   );
 }
 }
-
 export default Main;

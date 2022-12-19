@@ -34,7 +34,7 @@ def convertToVideo():
         size = (width,height)
         img_array.append(img)
     
-    out = cv2.VideoWriter('project.avi',cv2.VideoWriter_fourcc(*'DIVX'), 15, size)
+    out = cv2.VideoWriter('project.avi',cv2.VideoWriter_fourcc(*'DIVX'), 30, size)
  
     for i in range(len(img_array)):
         out.write(img_array[i])
@@ -85,12 +85,12 @@ def fileUpload():
         subprocess.run(["mv",destination,UPLOAD_FOLDER+"/"+"ImageData"])
         
     os.chdir('/Users/dalveersingh/Downloads/College/testing capstone/app/server/automatic-video-colorization')
-    arr=["python", "-m", "tcvc.apply","--input-path","/Users/dalveersingh/Downloads/College/testing capstone/data_upload/ImageData","--input-style", "greyscale", "--model", "/Users/dalveersingh/Downloads/College/testing capstone/weights-greyscale/16-20/netG_LA2_weights_epoch_5.pth"]
+    arr=["python", "-m", "tcvc.apply","--input-path","/Users/dalveersingh/Downloads/College/testing capstone/data_upload/ImageData","--input-style", "greyscale", "--model", "/Users/dalveersingh/Downloads/College/testing capstone/weights-greyscale/20-25/netG_LA2_weights_epoch_5.pth"]
     
     subprocess.run(arr)
     
     session['uploadFilePath']=destination
-    extention = ".mp4"
+    # extention = ".mp4"
     response = jsonify({'some': 'data'})
     response.headers.add('Access-Control-Allow-Origin', '*')
     if extention == ".mp4":
